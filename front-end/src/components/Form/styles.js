@@ -1,13 +1,13 @@
 import { makeStyles } from "@mui/styles";
 
-export default makeStyles((theme) => ({
+export default makeStyles({
   root: {
     "& .MuiTextField-root": {
-      margin: theme.spacing(1),
+      margin: "8px",
     },
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: "16px",
   },
   form: {
     display: "flex",
@@ -21,4 +21,4 @@ export default makeStyles((theme) => ({
   buttonSubmit: {
     marginBottom: 10,
   },
-}));
+});

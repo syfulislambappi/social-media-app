@@ -3,9 +3,17 @@ import logo from "./assets/memories.png";
 import Form from "./components/Form/Form";
 import Posts from "./components/Posts/Posts";
 import useStyles from "./styles";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getPosts } from "./actions/posts";
 
 function App() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
@@ -17,7 +25,7 @@ function App() {
           <Container>
             <Grid
               container
-              justifyContent="space-between"
+              justify="space-between"
               alignItems="stretch"
               spacing={3}
             >
