@@ -22,24 +22,24 @@ function App() {
           Memories
         </Typography>
         <img className={classes.image} src={logo} alt="Logo" height="60" />
-        <Grow in>
-          <Container>
-            <Grid
-              container
-              justify="space-between"
-              alignItems="stretch"
-              spacing={3}
-            >
-              <Grid item xs={12} sm={7}>
-                <Posts setCurrentId={setCurrentId} />
-              </Grid>
-              <Grid item xs={12} sm={7}>
-                <Form currentId={currentId} setCurrentId={setCurrentId} />
-              </Grid>
-            </Grid>
-          </Container>
-        </Grow>
       </AppBar>
+      <Grow in>
+        <Container>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="stretch"
+            spacing={3}
+          >
+            <Grid item xs={12} sm={7}>
+              <Posts setCurrentId={setCurrentId} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grow>
     </Container>
   );
 }

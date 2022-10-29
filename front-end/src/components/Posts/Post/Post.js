@@ -10,7 +10,7 @@ import { Delete, MoreHoriz, ThumbUpAlt } from "@mui/icons-material";
 import useStyles from "./styles";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deletePost } from "../../../actions/posts";
+import { deletePost, updateLike } from "../../../actions/posts";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
@@ -18,6 +18,8 @@ const Post = ({ post, setCurrentId }) => {
   const handleDelete = (id) => {
     dispatch(deletePost(id));
   };
+
+  const handleLIke = (id) => dispatch(updateLike(id));
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -49,13 +51,17 @@ const Post = ({ post, setCurrentId }) => {
         {post.title}
       </Typography>
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" gutterBottom>
           {post.message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}>
-          <ThumbUpAlt fontSize="small" /> Like {post.likeCount}
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => handleLIke(post._id)}
+        >
+          <ThumbUpAlt fontSize="small" /> &nbsp; Like {post.likeCount}
         </Button>
         <Button
           size="small"
