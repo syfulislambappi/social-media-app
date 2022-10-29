@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Post = require("../model/Post");
 
 exports.getAllPost = async (req, res, next) => {
@@ -19,6 +20,40 @@ exports.createPost = async (req, res, next) => {
     res.status(201).json(newPost);
   } catch (error) {
     error.status = 409;
+    next(error);
+    console.log(error);
+  }
+};
+
+exports.updatePost = async (req, res, next) => {
+  try {
+    const { id: _id } = req.params;
+    const post = req.body;
+    if (!mongoose.Types.ObjectId.isValid(_id))
+      return res
+        .status(404)
+        .json({ message: "No post is found with that id." });
+
+    const updatedPost = await Post.findByIdAndUpdate(_id, post, { new: true });
+    res.status(201).json(updatedPost);
+  } catch (error) {
+    error.status = 501;
+    next(error);
+    console.log(error);
+  }
+};
+
+exports.deletePost = async (req, res, next) => {
+  try {
+    const { id: _id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(_id))
+      return res
+        .status(404)
+        .json({ message: "No post is found with that id." });
+    await Post.findByIdAndRemove(_id);
+    res.status(201).json({ message: "Post is deleted successfully." });
+  } catch (error) {
+    error.status = 501;
     next(error);
     console.log(error);
   }
