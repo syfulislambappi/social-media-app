@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
     borderRadius: 15,
     margin: "30px 0",
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "10px 50px",
@@ -35,6 +34,7 @@ export default makeStyles((theme) => ({
   brandContainer: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
