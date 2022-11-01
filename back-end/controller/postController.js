@@ -13,7 +13,7 @@ exports.getAllPost = async (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   const post = req.body;
-  const newPost = new Post(post);
+  const newPost = new Post({ ...post, creator: req.userId });
 
   try {
     await newPost.save();
@@ -62,14 +62,23 @@ exports.deletePost = async (req, res, next) => {
 exports.likePost = async (req, res, next) => {
   try {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id))
       return res.status(404).json({ message: "No post found with that id." });
+
+    if (!req.userId) return res.status(404).json({ message: "No User found." });
+
     const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
-      { likeCount: post.likeCount + 1 },
-      { new: true }
-    );
+    const index = post.likes.findIndex((id) => id === String(req.userId));
+
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+
     res.status(201).json(updatedPost);
   } catch (error) {
     error.status = 501;

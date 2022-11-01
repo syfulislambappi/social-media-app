@@ -16,6 +16,10 @@ const postSchema = new Schema(
       max: [500, "Message should not exceeds 500 characters."],
       trim: true,
     },
+    name: {
+      type: String,
+      trim: true,
+    },
     creator: {
       type: String,
       required: [true, "Creator name must be required."],
@@ -31,9 +35,9 @@ const postSchema = new Schema(
       type: String,
       required: [true, "File must be uploaded."],
     },
-    likeCount: {
-      type: Number,
-      default: 0,
+    likes: {
+      type: [String],
+      default: [],
     },
   },
   { timestamps: true }
