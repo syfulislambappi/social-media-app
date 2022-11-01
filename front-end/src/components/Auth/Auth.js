@@ -35,7 +35,7 @@ const Auth = () => {
 
   const switchMode = () => {
     setIsSignup((prevState) => !prevState);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
 
   const handleSubmit = (e) => {
@@ -48,7 +48,6 @@ const Auth = () => {
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(formData);
   };
   return (
     <Container component="main" maxWidth="xs">
