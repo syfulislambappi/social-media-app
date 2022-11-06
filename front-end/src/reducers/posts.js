@@ -11,6 +11,8 @@ const posts = (posts = [], action) => {
       );
     case types.FETCH_ALL:
       return action.payload;
+    case types.FETCH_BY_SEARCH:
+      return action.payload;
     case types.CREATE:
       return [...posts, action.payload];
     default:

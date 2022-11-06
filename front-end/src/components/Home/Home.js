@@ -6,18 +6,15 @@ import {
   AppBar,
   TextField,
   Button,
-  Chip,
-  Autocomplete,
 } from "@mui/material";
 import Form from "../Form/Form";
 import Posts from "../Posts/Posts";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Paginate from "../Pagination";
 import { useNavigate, useLocation } from "react-router-dom";
 import useStyles from "./styles";
-// import ChipInput from "material-ui-chip-input";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -32,19 +29,19 @@ const Home = () => {
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
-  const [tags, setTags] = useState(["News"]);
-
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  const [tags, setTags] = useState("");
 
   const searchPost = () => {
-    if (search.trim()) {
-      dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+    if (search.trim() || tags) {
+      dispatch(getPostsBySearch({ search, tags: tags.split(",") }));
+      navigate(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.split(",")}`
+      );
     } else {
       navigate("/");
     }
   };
+
   const handleKeyPress = (e) => {
     if (e.keyCode === 13) {
       searchPost();
@@ -79,19 +76,14 @@ const Home = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
-              <Autocomplete
-                multiple
-                id="tags-standard"
-                options={tags}
-                getOptionLabel={(option) => option}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="standard"
-                    label="Multiple values"
-                    placeholder="Favorites"
-                  />
-                )}
+              <TextField
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                variant="outlined"
+                name="tags"
+                fullWidth
+                label="Search Tags"
+                style={{ marginTop: "10px" }}
               />
               <Button
                 onClick={searchPost}
@@ -103,7 +95,7 @@ const Home = () => {
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={6}>
-              <Paginate />
+              <Paginate page={page} />
             </Paper>
           </Grid>
         </Grid>
