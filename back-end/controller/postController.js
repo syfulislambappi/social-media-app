@@ -23,6 +23,17 @@ exports.getAllPost = async (req, res, next) => {
   }
 };
 
+exports.getSinglePost = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+    console.log(error);
+  }
+};
+
 exports.getPostsBySearch = async (req, res, next) => {
   try {
     const { searchQuery, tags } = req.query;

@@ -6,10 +6,12 @@ const {
   deletePost,
   likePost,
   getPostsBySearch,
+  getSinglePost,
 } = require("../controller/postController");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/all", getAllPost);
+router.get("/:id", getSinglePost);
 router.get("/search", getPostsBySearch);
 router.post("/create", authMiddleware, createPost);
 router.patch("/update/:id", authMiddleware, updatePost);
