@@ -28,6 +28,8 @@ const posts = (state = { isLoading: true, posts: [] }, action) => {
       };
     case types.FETCH_BY_SEARCH:
       return { ...state, posts: action.payload };
+    case types.FETCH_POST:
+      return { ...state, post: action.payload };
     case types.CREATE:
       return { ...state, posts: [...state.posts, action.payload] };
     default:

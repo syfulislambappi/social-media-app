@@ -16,9 +16,11 @@ import useStyles from "./styles";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { deletePost, updateLike } from "../../../actions/posts";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile"));
   const handleDelete = (id) => {
@@ -51,13 +53,26 @@ const Post = ({ post, setCurrentId }) => {
       </>
     );
   };
+
+  const openPost = () => navigate(`/posts/${post._id}`);
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image={post.selectedFile}
-        title={post.title}
-      />
+    <Card className={classes.card} raised elevation={6}>
+      <button
+        onClick={openPost}
+        style={{
+          backgroundColor: "transparent",
+          color: "transparent",
+          border: "none",
+          outline: "none",
+          cursor: "pointer",
+        }}
+      >
+        <CardMedia
+          className={classes.media}
+          image={post.selectedFile}
+          title={post.title}
+        />
+      </button>
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
