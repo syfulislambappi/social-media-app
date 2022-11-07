@@ -12,13 +12,11 @@ exports.getAllPost = async (req, res, next) => {
       .limit(LIMIT)
       .skip(startIndex);
 
-    res
-      .status(200)
-      .jso({
-        data: posts,
-        currentPage: Number(page),
-        numberOfPage: Math.ceil(total / LIMIT),
-      });
+    res.status(200).json({
+      data: posts,
+      currentPage: Number(page),
+      numberOfPage: Math.ceil(total / LIMIT),
+    });
   } catch (error) {
     next(error);
     console.log(error);
