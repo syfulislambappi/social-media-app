@@ -1,22 +1,37 @@
 import * as types from "../constants/actionTypes";
 
-const posts = (posts = [], action) => {
+const posts = (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
+    case types.START_LOADING:
+      return { ...state, isLoading: true };
+    case types.END_LOADING:
+      return { ...state, isLoading: false };
     case types.DELETE:
-      return posts.filter((post) => post._id !== action.payload.id);
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== action.payload.id),
+      };
     case types.UPDATE:
     case types.UPDATE_LIKE:
-      return posts.map((post) =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
     case types.FETCH_ALL:
-      return action.payload;
+      return {
+        ...state,
+        posts: action.payload.data,
+        currentPage: action.payload.currentPage,
+        numberOfPage: action.payload.numberOfPage,
+      };
     case types.FETCH_BY_SEARCH:
-      return action.payload;
+      return { ...state, posts: action.payload };
     case types.CREATE:
-      return [...posts, action.payload];
+      return { ...state, posts: [...state.posts, action.payload] };
     default:
-      return posts;
+      return state;
   }
 };
 
