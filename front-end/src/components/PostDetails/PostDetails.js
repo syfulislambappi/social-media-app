@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPost } from "../../actions/posts";
+import { getPost, getPostsBySearch } from "../../actions/posts";
 import useClasses from "./styles";
 
 const PostDetails = () => {
@@ -16,6 +16,17 @@ const PostDetails = () => {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
+
+  // useEffect(() => {
+  //   if (post) {
+  //     dispatch(
+  //       getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
+  //     );
+  //   }
+  // }, [post, dispatch]);
+  // console.log(posts);
+  // const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
+
   if (!post) return null;
   if (isLoading) {
     return (
@@ -67,6 +78,21 @@ const PostDetails = () => {
           />
         </div>
       </div>
+      {/* {recommendedPosts.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant="h5">
+            You might also like:
+          </Typography>
+          <Divider />
+          <div className={classes.recommendedPosts}>
+            {recommendedPosts.map(
+              ({ title, message, name, likes, selectedFile, _id }) => (
+                <div>{title}</div>
+              )
+            )}
+          </div>
+        </div>
+      )} */}
     </Paper>
   );
 };
