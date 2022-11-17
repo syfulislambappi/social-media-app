@@ -44,7 +44,7 @@ exports.getPostsBySearch = async (req, res, next) => {
     res.status(200).json({ data: posts });
   } catch (error) {
     next(error);
-    console.log(error);
+    console.log(error.message);
   }
 };
 

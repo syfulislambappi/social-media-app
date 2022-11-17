@@ -2,7 +2,7 @@ exports.notFoundHandler = async (_req, res, next) => {
   try {
     res.status(404).json({ message: "Resource is not found." });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     next(error);
   }
 };
